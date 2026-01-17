@@ -2,12 +2,16 @@
 import Layout from "../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import heroImage from "../assets/hero.webp";
-import JobList from "../modules/jobs/JobList.astro";
+import JobItem from "../modules/jobs/JobItem.astro";
 import InputSearch from "../shared/components/InputSearch.astro";
 import { getCollection } from "astro:content";
 import BlogCarousel from "../modules/blogs/BlogCarousel.astro";
 import { getPubDate } from "../core/utils/getFileDate";
+import { getAllJobs } from "../core/lib/jobsService";
 
+// Obtener empleos destacados (primeros 10)
+const allJobs = await getAllJobs();
+const featuredJobs = allJobs.slice(0, 10);
 
 const blogPosts = await getCollection("blog");
 const sortedPosts = blogPosts
@@ -76,8 +80,22 @@ const sortedPosts = blogPosts
 			</svg>
 		</a>
 	</div>
-	<div class="min-h-[600px]">
-		<!-- <JobList jobs={featuredJobs} variant="list" limit={10} /> -->
+	<div class="container mx-auto px-4 max-w-5xl mb-12">
+		{
+			featuredJobs.length > 0 ? (
+				<div class="flex flex-col gap-4">
+					{featuredJobs.map((job) => (
+						<JobItem job={job} variant="list" />
+					))}
+				</div>
+			) : (
+				<div class="py-16 text-center">
+					<p class="text-gray-500 text-lg">
+						No hay empleos disponibles en este momento.
+					</p>
+				</div>
+			)
+		}
 	</div>
 	<BlogCarousel posts={sortedPosts} />
 </Layout>
