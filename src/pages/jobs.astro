@@ -2,6 +2,11 @@
 import HeadTitle from "../shared/components/HeadTitle.astro";
 import Layout from "../layouts/Layout.astro";
 import InputSearch from "../shared/components/InputSearch.astro";
+import JobItem from "../modules/jobs/JobItem.astro";
+import { getAllJobs } from "../core/lib/jobsService";
+
+// Obtener todos los empleos en tiempo de build (SSG)
+const jobs = await getAllJobs();
 
 // Get query params from URL
 const url = new URL(Astro.request.url);
@@ -21,7 +26,12 @@ const query = url.searchParams.get("q") || "";
         />
 
         <section class="container mx-auto px-4 py-10">
-            <!-- Results count -->
+            <!-- Conteo de empleos -->
+            <div class="text-gray-600 mb-6 max-w-5xl mx-auto">
+                <span id="visible-count">{jobs.length}</span> empleos disponibles
+            </div>
+
+            <!-- Results count (para búsqueda) -->
             <div
                 id="results-count"
                 class="text-gray-600 mb-6 hidden max-w-5xl mx-auto"
@@ -33,7 +43,23 @@ const query = url.searchParams.get("q") || "";
 
             <!-- Job List Container -->
             <div id="job-grid" class="flex flex-col gap-4 max-w-5xl mx-auto">
-                {/* Job Items */}
+                {
+                    jobs.map((job) => (
+                        <div
+                            class="job-item"
+                            data-title={job.job_title.toLowerCase()}
+                            data-employer={
+                                job.employer_name?.toLowerCase() || ""
+                            }
+                            data-location={`${job.job_city || ""} ${job.job_country || ""}`.toLowerCase()}
+                            data-type={
+                                job.job_employment_type?.toLowerCase() || ""
+                            }
+                        >
+                            <JobItem job={job} variant="list" />
+                        </div>
+                    ))
+                }
             </div>
 
             <!-- Empty State -->
@@ -67,12 +93,22 @@ const query = url.searchParams.get("q") || "";
                     Ver todos los empleos
                 </button>
             </div>
+
+            <!-- Sin empleos en absoluto -->
+            {
+                jobs.length === 0 && (
+                    <div class="py-20 text-center">
+                        <p class="text-gray-500 text-lg">
+                            No hay empleos disponibles en este momento.
+                        </p>
+                    </div>
+                )
+            }
         </section>
     </div>
 </Layout>
 
 <script>
-
     function setupFilters() {
         const searchInput = document.getElementById(
             "search-input",

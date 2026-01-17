@@ -1,46 +1,55 @@
 # Astro Starter Kit: Basics
 
-```sh
-bun create astro@latest -- --template basics
+```sql
+CREATE TABLE IF NOT EXISTS jobs (
+  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+
+  job_id VARCHAR(255) NOT NULL,
+  title VARCHAR(500) NOT NULL,
+  company VARCHAR(255),
+  location VARCHAR(255),
+  country VARCHAR(10),
+  description TEXT,
+  job_type VARCHAR(50),
+  employment_type VARCHAR(50),
+
+  source VARCHAR(100),
+  apply_link TEXT,
+
+  salary VARCHAR(100),
+  posted_date TIMESTAMP WITHOUT TIME ZONE,
+
+  synced_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  raw_data TEXT,
+
+  CONSTRAINT idx_job_id UNIQUE (job_id)
+);
+
+
+CREATE INDEX IF NOT EXISTS idx_country     ON jobs (country);
+CREATE INDEX IF NOT EXISTS idx_source      ON jobs (source);
+CREATE INDEX IF NOT EXISTS idx_job_type    ON jobs (job_type);
+CREATE INDEX IF NOT EXISTS idx_synced_at   ON jobs (synced_at);
+CREATE INDEX IF NOT EXISTS idx_posted_date ON jobs (posted_date);
+
+
+CREATE TABLE IF NOT EXISTS sync_log (
+  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  sync_date TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+  jobs_fetched INTEGER DEFAULT 0,
+  jobs_saved INTEGER DEFAULT 0,
+  api_calls INTEGER DEFAULT 1,
+  status VARCHAR(50) DEFAULT 'success',
+  error_message TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_sync_date ON sync_log (sync_date);
+
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+# Comandos
+```bash
+bun run sync - Sincroniza empleos desde JSearch a Supabase
+bun run build - Solo build de Astro
+bun run build:sync - Sincroniza + build (para producción)
 ```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

@@ -12,7 +12,10 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "sync": "node --env-file=.env scripts/sync-jobs.mjs",
+    "sync:ci": "node scripts/sync-jobs.mjs",
     "build": "astro build",
+    "build:sync": "node scripts/sync-jobs.mjs && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },

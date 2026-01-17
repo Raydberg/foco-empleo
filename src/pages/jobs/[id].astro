@@ -2,13 +2,45 @@
 import Layout from "../../layouts/Layout.astro";
 import JobDetails from "../../modules/jobs/JobDetails.astro";
 import HeadTitle from "../../shared/components/HeadTitle.astro";
+import {
+    getAllJobIds,
+    getJobById,
+    getRelatedJobs,
+} from "../../core/lib/jobsService";
 
+// Generar rutas estáticas para todos los empleos
+export async function getStaticPaths() {
+    const jobIds = await getAllJobIds();
 
+    return jobIds.map((id) => ({
+        params: { id },
+    }));
+}
+
+const { id } = Astro.params;
+const job = await getJobById(id);
+
+// Redireccionar si no se encuentra el empleo
+if (!job) {
+    return Astro.redirect("/404");
+}
+
+// Obtener empleos relacionados
+const relatedJobs = await getRelatedJobs(job, 6);
+
+// Crear descripción corta para SEO
+const shortDescription = job.job_description
+    ? job.job_description.substring(0, 160).replace(/<[^>]*>/g, "") + "..."
+    : `Empleo de ${job.job_title} en ${job.employer_name || "empresa"}`;
 ---
 
-<Layout title={""} description={""} image={""}>
+<Layout
+    title={`${job.job_title} - ${job.employer_name || "Empleo"}`}
+    description={shortDescription}
+    image={job.employer_logo || undefined}
+>
     <HeadTitle title="Acerca del empleo" />
     <main class="min-h-screen bg-gray-50">
-     
+        <JobDetails job={job} relatedJobs={relatedJobs} />
     </main>
 </Layout>
