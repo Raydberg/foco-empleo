@@ -1,0 +1,161 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+
+@theme {
+    --color-primary: #3490dc;
+    --color-secondary: #ffed4a;
+    --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    @theme {
+        --color-primary: #6574cd;
+        --color-secondary: #f6993f;
+    }
+}
+
+/* Regular */
+@font-face {
+    font-family: "Figtree";
+    src: url("/fonts/figtree-400.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Medium */
+@font-face {
+    font-family: "Figtree";
+    src: url("/fonts/figtree-500.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* SemiBold */
+@font-face {
+    font-family: "Figtree";
+    src: url("/fonts/figtree-600.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Bold */
+@font-face {
+    font-family: "Figtree";
+    src: url("/fonts/figtree-700.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ExtraBold */
+@font-face {
+    font-family: "Figtree";
+    src: url("/fonts/figtree-800.woff2") format("woff2");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@media (prefers-color-scheme: dark) {
+    @theme {
+        --color-primary: #6574cd;
+        --color-secondary: #f6993f;
+    }
+}
+
+
+@layer components {
+    .hero-header {
+        @apply w-full flex items-start justify-center min-h-[50px] lg:h-[238px];
+        background: linear-gradient(90deg, #0F4C5C 1.44%, #309689 95.67%);
+        border-radius: 8px;
+    }
+
+    .title-header {
+        font-family: Figtree;
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 100%;
+        letter-spacing: 0%;
+        text-align: center;
+        color: white;
+        margin-bottom: 0;
+    }
+
+    .heading-lg {
+        @apply text-[32px] leading-[40px] font-semibold;
+    }
+
+    .heading-md {
+        @apply text-[24px] leading-[32px] font-semibold;
+    }
+
+    .heading-sm {
+        @apply text-[20px] leading-[28px] font-medium;
+    }
+
+    .heading-xs {
+        @apply text-[16px] leading-[24px] font-semibold;
+    }
+
+    .body-lg-semibold {
+        @apply text-[20px] leading-[28px] font-semibold;
+    }
+
+    .body-lg-regular {
+        @apply text-[20px] leading-[28px] font-normal;
+    }
+
+    .body-md-semibold {
+        @apply text-[16px] leading-[24px] font-semibold;
+    }
+
+    .body-md-regular {
+        @apply text-[16px] leading-[24px] font-normal;
+    }
+
+    .body-sm-semibold {
+        @apply text-[14px] leading-[22px] font-semibold;
+    }
+
+    .body-sm-regular {
+        @apply text-[14px] leading-[22px] font-normal;
+    }
+
+    .body-xs-semibold {
+        @apply text-[12px] leading-[18px] font-semibold;
+    }
+
+    .body-xs-regular {
+        @apply text-[12px] leading-[18px] font-normal;
+    }
+}
+
+@layer utilities {
+    @starting-style {
+        dialog[open] {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+    }
+
+    dialog[open] {
+        opacity: 1;
+        transform: scale(1);
+        transition: opacity 0.25s, transform 0.25s, overlay 0.25s allow-discrete, display 0.25s allow-discrete;
+    }
+
+    /* 
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.4s ease-out forwards;
+    } */
+}

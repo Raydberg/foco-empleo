@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://focoempleo.com/sitemap-index.xml

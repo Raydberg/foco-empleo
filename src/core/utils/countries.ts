@@ -1,0 +1,18 @@
+export const countries = [
+    { id: 1, code: 'CO', flag: 'https://flagcdn.com/co.svg' },
+    { id: 2, code: 'ES', flag: 'https://flagcdn.com/es.svg' },
+    { id: 3, code: 'AR', flag: 'https://flagcdn.com/ar.svg' },
+    { id: 4, code: 'CR', flag: 'https://flagcdn.com/cr.svg' },
+    { id: 5, code: 'DO', flag: 'https://flagcdn.com/do.svg' },
+    { id: 6, code: 'EC', flag: 'https://flagcdn.com/ec.svg' },
+    { id: 7, code: 'GT', flag: 'https://flagcdn.com/gt.svg' },
+    { id: 8, code: 'HN', flag: 'https://flagcdn.com/hn.svg' },
+    { id: 9, code: 'MX', flag: 'https://flagcdn.com/mx.svg' },
+    { id: 10, code: 'CL', flag: 'https://flagcdn.com/cl.svg' },
+    { id: 11, code: 'PA', flag: 'https://flagcdn.com/pa.svg' },
+    { id: 12, code: 'PY', flag: 'https://flagcdn.com/py.svg' },
+    { id: 13, code: 'PE', flag: 'https://flagcdn.com/pe.svg' },
+    { id: 14, code: 'SV', flag: 'https://flagcdn.com/sv.svg' },
+    { id: 15, code: 'UY', flag: 'https://flagcdn.com/uy.svg' },
+    { id: 16, code: 'VE', flag: 'https://flagcdn.com/ve.svg' },
+] as const;

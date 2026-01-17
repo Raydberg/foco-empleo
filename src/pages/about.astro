@@ -1,0 +1,209 @@
+---
+import Layout from "../layouts/Layout.astro";
+import UserIcon from "../shared/icons/UserIcon.astro";
+import SendIcon from "../shared/icons/SendIcon.astro";
+import HeadTitle from "../shared/components/HeadTitle.astro";
+import RocketIcon from "../shared/icons/RocketIcon.astro";
+import HopIcon from "../shared/icons/HopIcon.astro";
+---
+
+<Layout title="Sobre nosotros">
+    <HeadTitle title="Sobre nosotros" />
+    <main class="container mx-auto px-4 py-8 md:py-12 max-w-4xl lg:max-w-6xl">
+        <article
+            class="bg-[#ebf5f499] rounded-[20px] p-5 md:py-7 md:px-5 mb-8 shadow-sm overflow-hidden"
+        >
+            <div class="flex items-start gap-5 mb-5">
+                <div class="w-6 h-6 text-[#0F4C5C] shrink-0">
+                    <HopIcon />
+                </div>
+                <div class="flex-1">
+                    <h2
+                        class="text-xl md:text-2xl font-semibold text-[#0F4C5C] mb-5"
+                    >
+                        Nuestra historia
+                    </h2>
+
+                    <div
+                        class="space-y-4 text-[#707070] text-base md:text-lg leading-normal"
+                    >
+                        <p>
+                            <strong class="font-normal text-[#707070]"
+                                >Foco Empleo</strong
+                            > nace a partir de una experiencia real en la búsqueda
+                            de empleo: currículums enviados sin respuesta, entrevistas
+                            confusas y una constante sensación de no ser suficiente.
+                        </p>
+
+                        <p>
+                            Durante años, muchas personas fueron descartadas no
+                            por falta de capacidad, sino por no saber cómo
+                            presentarse, cómo comunicar su experiencia o cómo
+                            adaptarse a los procesos actuales de selección.
+                        </p>
+
+                        <p>
+                            Ante esta realidad, surgimos como proyecto
+                            independiente con un objetivo claro: ofrecer un
+                            portal de empleo <strong
+                                class="font-normal text-[#0E4453]"
+                                >transparente, confiable y fácil de usar</strong
+                            > para el mundo hispanohablante.
+                        </p>
+
+                        <p>
+                            Hoy, Foco Empleo continúa creciendo como una
+                            plataforma moderna, ética y completamente centrada
+                            en las personas.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <section
+            class="bg-[#ebf5f499] rounded-[20px] p-5 md:py-7 md:px-5 shadow-sm overflow-hidden"
+        >
+            <div class="flex flex-col gap-11">
+                <article class="flex items-start gap-5">
+                    <div class="w-6 h-6 shrink-0">
+                        <RocketIcon />
+                    </div>
+                    <div class="flex-1">
+                        <h2
+                            class="text-xl md:text-2xl font-semibold text-[#0F4C5C] mb-3"
+                        >
+                            Nuestra misión
+                        </h2>
+                        <div
+                            class="text-[#6c757d] text-base md:text-lg leading-normal space-y-4"
+                        >
+                            <p>
+                                Convertirnos en uno de los portales de empleo
+                                más confiables y accesibles en la comunidad
+                                hispanohablante, construyendo una plataforma
+                                donde cada persona pueda encontrar oportunidades
+                                alineadas a su estilo de vida, su crecimiento y
+                                su futuro.
+                            </p>
+                            <p>
+                                Así como acompañar a personas en su búsqueda de
+                                empleo brindando herramientas claras, accesibles
+                                y personalizadas para que puedan:
+                            </p>
+                            <ul class="list-disc ml-5 space-y-1">
+                                <li>Entender su perfil profesional</li>
+                                <li>
+                                    Comunicar su experiencia laboral con
+                                    claridad
+                                </li>
+                                <li>
+                                    Mejorar su currículum y perfil de LinkedIn
+                                </li>
+                                <li>Prepararse para entrevistas laborales</li>
+                                <li>
+                                    Recuperar confianza en el proceso de
+                                    búsqueda de trabajo.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="flex items-start gap-5">
+                    <div class="w-6 h-6 shrink-0">
+                        <UserIcon />
+                    </div>
+                    <div class="flex-1">
+                        <h2
+                            class="text-xl md:text-2xl font-medium text-[#0F4C5C] mb-3"
+                        >
+                            Quiénes somos
+                        </h2>
+                        <div
+                            class="text-[#6c757d] text-base md:text-lg leading-normal"
+                        >
+                            <p>
+                                <a
+                                    href="https://www.linkedin.com/in/daianaromano/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-[#0F4C5C] hover:underline transition-colors font-normal"
+                                >
+                                    Daiana
+                                </a>
+                                <span class="text-[#6c757d]"> – Fundadora</span>
+                                <br />
+                                <span>
+                                    Creadora de contenido laboral. Su objetivo
+                                    es acompañar, informar y simplificar el
+                                    proceso laboral para la comunidad.
+                                </span>
+                            </p>
+                            <p class="mt-2">
+                                <a
+                                    href="https://www.linkedin.com/in/raydbergchuquival"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="text-[#0E4453] hover:underline transition-colors font-normal"
+                                >
+                                    Raydberg
+                                </a>
+                                <span class="text-[#6c757d]">
+                                    - Desarollador de la página web.</span
+                                >
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="flex items-start gap-5">
+                    <div class="w-6 h-6 shrink-0">
+                        <SendIcon />
+                    </div>
+                    <div class="flex-1">
+                        <h2
+                            class="text-xl md:text-2xl font-medium text-[#0F4C5C] mb-3"
+                        >
+                            Nuestro compromiso
+                        </h2>
+                        <div
+                            class="text-[#6c757d] text-base md:text-lg leading-normal space-y-4"
+                        >
+                            <p>
+                                Queremos que Foco Empleo sea un referente en
+                                orientación laboral consciente, especialmente
+                                para perfiles junior, personas en transición
+                                laboral y quienes se sienten fuera del sistema
+                                tradicional de selección.
+                            </p>
+                            <ul class="list-disc ml-5 space-y-1">
+                                <li>
+                                    Moderamos todas las publicaciones para
+                                    mantener un entorno seguro.
+                                </li>
+                                <li>
+                                    Revisamos cualquier reporte de vacante
+                                    sospechosa.
+                                </li>
+                                <li>
+                                    Respetamos tu tiempo, tu privacidad y tu
+                                    búsqueda laboral.
+                                </li>
+                            </ul>
+                            <p>
+                                Si encontrás algo que debamos revisar, podés
+                                escribirnos a: <a
+                                    href="mailto:focoempleo1@gmail.com"
+                                    class="text-[#0F4C5C] hover:underline transition-colors"
+                                >
+                                    focoempleo1@gmail.com
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+</Layout>

@@ -1,0 +1,154 @@
+---
+import BlogCard from "./BlogCard.astro";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+    posts: CollectionEntry<"blog">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section class="blog-carousel-wrapper">
+    <div class="container mx-auto px-4 py-16">
+        <div class="flex justify-between items-center mb-8">
+            <div>
+                <h2 class="font-bold text-3xl mb-2">Noticias y Blogs</h2>
+                <p class="text-gray-600">
+                    Infórmate con contenido actual sobre el mercado laboral
+                </p>
+            </div>
+            <a
+                href="/blog"
+                class="text-teal-700 hover:text-teal-900 font-medium flex items-center gap-2"
+            >
+                Ver todos
+                <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"></path>
+                </svg>
+            </a>
+        </div>
+
+        <div class="blog-carousel">
+            {
+                posts.map((post) => (
+                    <div class="carousel-card-wrapper">
+                        <BlogCard post={post} priority={false} />
+                    </div>
+                ))
+            }
+        </div>
+
+        <div class="scroll-indicator">
+            <p class="text-sm text-gray-500 text-center">
+                ← Desliza para ver más →
+            </p>
+        </div>
+    </div>
+</section>
+
+<style>
+    .blog-carousel-wrapper {
+        position: relative;
+    }
+
+    .blog-carousel {
+        display: flex;
+        gap: 1.5rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #0f4c5c #e5e7eb;
+        padding-bottom: 1rem;
+    }
+
+    .blog-carousel::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .blog-carousel::-webkit-scrollbar-track {
+        background: #e5e7eb;
+        border-radius: 10px;
+    }
+
+    .blog-carousel::-webkit-scrollbar-thumb {
+        background: #0f4c5c;
+        border-radius: 10px;
+    }
+
+    .blog-carousel::-webkit-scrollbar-thumb:hover {
+        background: #0a3540;
+    }
+
+    .carousel-card-wrapper {
+        flex: 0 0 auto;
+        width: 350px;
+        scroll-snap-align: start;
+    }
+
+    .scroll-indicator {
+        margin-top: 1rem;
+        opacity: 0.7;
+    }
+
+    @media (max-width: 640px) {
+        .carousel-card-wrapper {
+            width: 280px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .carousel-card-wrapper {
+            width: 380px;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener("astro:page-load", () => {
+        const carousel = document.querySelector(
+            ".blog-carousel",
+        ) as HTMLElement;
+        if (!carousel) return;
+
+        const STORAGE_KEY = "blog_carousel_scroll";
+
+        try {
+            const savedPos = sessionStorage.getItem(STORAGE_KEY);
+            if (savedPos) {
+                const position = parseInt(savedPos, 10);
+                requestAnimationFrame(() => {
+                    carousel.scrollLeft = position;
+                });
+            }
+        } catch (e) {
+            console.error("Error restoring carousel scroll:", e);
+        }
+
+        let scrollTimeout: number;
+        carousel.addEventListener("scroll", () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = window.setTimeout(() => {
+                try {
+                    sessionStorage.setItem(
+                        STORAGE_KEY,
+                        carousel.scrollLeft.toString(),
+                    );
+                } catch (e) {
+                    console.error("Error saving carousel scroll:", e);
+                }
+            }, 100);
+        });
+    });
+</script>

@@ -1,0 +1,173 @@
+---
+import JobIcon from "../../shared/icons/JobIcon.astro";
+import LocationIcon from "../../shared/icons/LocationIcon.astro";
+import TimeIcon from "../../shared/icons/TimeIcon.astro";
+import WalletIcon from "../../shared/icons/WalletIcon.astro";
+import DefaultJobIcon from "../../shared/icons/DefaultJobIcon.astro";
+
+
+
+const { job, variant = "grid", source } = Astro.props;
+---
+
+{
+    variant === "list" ? (
+        <a
+            href={`/jobs/${job.job_id}`}
+            class="group relative bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-100 transition-all duration-300 flex flex-col gap-6 cursor-pointer text-left"
+            aria-label={`Oferta de trabajo: ${job.job_title} en ${job.employer_name}`}
+        >
+            <div class="flex items-start">
+                <span class="bg-teal-900 text-white text-xs font-semibold px-3 py-1 rounded-md">
+                    {job.job_posted_at ?? "Reciente"}
+                </span>
+            </div>
+
+            <div class="flex items-center gap-4 md:gap-6">
+                <div class="shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-full border border-gray-100 p-1 flex items-center justify-center bg-white overflow-hidden">
+                    {job.employer_logo ? (
+                        <img
+                            src={job.employer_logo}
+                            alt={`Logo de ${job.employer_name}`}
+                            class="w-full h-full object-contain"
+                            loading="lazy"
+                        />
+                    ) : (
+                        <DefaultJobIcon />
+                    )}
+                </div>
+                <div>
+                    <h3 class="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-teal-800 transition-colors mb-1">
+                        {job.job_title}
+                    </h3>
+                    <p class="text-gray-500 font-medium text-sm md:text-base">
+                        {job.employer_name}
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-2">
+                <div class="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-gray-600">
+                    <div class="flex items-center gap-2">
+                        <div class="text-teal-800">
+                            <JobIcon />
+                        </div>
+                        <span class="font-medium">Desarrollo</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="text-teal-800">
+                            <TimeIcon />
+                        </div>
+                        <span class="capitalize font-medium">
+                            {job.job_employment_type || "Full Time"}
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="text-teal-800">
+                            <WalletIcon />
+                        </div>
+                        <span class="font-medium">
+                            {job.job_salary
+                                ? `$${job.job_salary}`
+                                : "A convenir"}
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="text-teal-800">
+                            <LocationIcon />
+                        </div>
+                        <span class="truncate font-medium max-w-[200px]">
+                            {job.job_city ? `${job.job_city}, ` : ""}
+                            {job.job_country}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="shrink-0">
+                    <span class="bg-teal-900 hover:bg-teal-800 text-white font-bold py-2.5 px-8 rounded-lg transition-colors shadow-sm text-sm cursor-pointer inline-block">
+                        Ver Empleo
+                    </span>
+                </div>
+            </div>
+        </a>
+    ) : (
+        <a
+            href={`/jobs/${job.job_id}`}
+            class="group relative bg-white p-4 md:p-6 rounded-xl md:rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg hover:border-teal-100 transition-all duration-300 flex flex-col justify-between h-full cursor-pointer text-left"
+            aria-label={`Oferta de trabajo: ${job.job_title} en ${job.employer_name}`}
+        >
+            <div class="flex items-start">
+                <span class="bg-teal-900 text-white text-xs font-semibold px-3 py-1 rounded-md">
+                    {job.job_posted_at ?? "Reciente"}
+                </span>
+            </div>
+
+            <div class="flex items-center gap-4 md:gap-6 mt-4">
+                <div class="shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-full border border-gray-100 p-1 flex items-center justify-center bg-white overflow-hidden">
+                    {job.employer_logo ? (
+                        <img
+                            src={job.employer_logo}
+                            alt={`Logo de ${job.employer_name}`}
+                            class="w-full h-full object-contain"
+                            loading="lazy"
+                        />
+                    ) : (
+                        <DefaultJobIcon />
+                    )}
+                </div>
+                <div>
+                    <h3 class="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-teal-800 transition-colors mb-1">
+                        {job.job_title}
+                    </h3>
+                    <p class="text-gray-500 font-medium text-sm md:text-base">
+                        {job.employer_name}
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pt-4">
+                <div class="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm text-gray-600">
+                    <div class="flex items-center gap-2">
+                        <div class="text-teal-800">
+                            <JobIcon />
+                        </div>
+                        <span class="font-medium">Desarrollo</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="text-teal-800">
+                            <TimeIcon />
+                        </div>
+                        <span class="capitalize font-medium">
+                            {job.job_employment_type || "Full Time"}
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="text-teal-800">
+                            <WalletIcon />
+                        </div>
+                        <span class="font-medium">
+                            {job.job_salary
+                                ? `$${job.job_salary}`
+                                : "A convenir"}
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <div class="text-teal-800">
+                            <LocationIcon />
+                        </div>
+                        <span class="truncate font-medium max-w-[200px]">
+                            {job.job_city ? `${job.job_city}, ` : ""}
+                            {job.job_country}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="shrink-0">
+                    <span class="bg-teal-900 hover:bg-teal-800 text-white font-bold py-2.5 px-8 rounded-lg transition-colors shadow-sm text-sm cursor-pointer inline-block">
+                        Ver Empleo
+                    </span>
+                </div>
+            </div>
+        </a>
+    )
+}

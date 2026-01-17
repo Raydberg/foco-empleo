@@ -1,0 +1,87 @@
+---
+import { Image } from "astro:assets";
+import logoSvg from "../../assets/logo.svg";
+import MobileMenu from "./MobileMenu.astro";
+
+const navItems = [
+    { name: "Inicio", href: "/" },
+    { name: "Empleo", href: "/jobs" },
+    { name: "Blog", href: "/blog" },
+    { name: "Servicios", href: "/services" },
+    { name: "Sobre Nosotros", href: "/about" },
+    { name: "Contacto", href: "/contact" },
+];
+
+const currentPath = Astro.url.pathname;
+
+const isActive = (href: string) => {
+    if (href === "/") {
+        return currentPath === "/";
+    }
+    return currentPath.startsWith(href);
+};
+---
+
+<nav
+    id="navbar"
+    class="sticky top-0 left-0 w-full z-50 py-4 px-6 flex justify-between items-center text-white/90 transition-all duration-300 bg-white"
+>
+    <a href="/" class="flex items-center gap-2 font-bold text-xl">
+        <Image
+            src={logoSvg}
+            alt="Logo Foco Empleo"
+            width={32}
+            height={32}
+            class="w-8 h-8"
+            loading="eager"
+        />
+        <span class="text-[#0D0D0D]">Foco Empleo</span>
+    </a>
+
+    <ul class="hidden md:flex gap-6 text-lg font-medium">
+        {
+            navItems.map((item) => (
+                <li>
+                    <a
+                        href={item.href}
+                        class={
+                            isActive(item.href)
+                                ? "text-[#0F4C5C] font-semibold"
+                                : // : "text-[#0B0B0B]/60 hover:text-[#0B0B0B] transition-colors"
+                                  "text-[#0B0B0B]/60"
+                        }
+                    >
+                        {item.name}
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+
+    <MobileMenu navItems={navItems} />
+</nav>
+
+<!-- <script>
+    const navbar = document.getElementById("navbar");
+    let lastScroll = 0;
+
+    window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset;
+
+        if (currentScroll > 50) {
+            navbar?.classList.add(
+                "backdrop-blur-md",
+                "bg-white/80",
+                "shadow-lg",
+            );
+        } else {
+            navbar?.classList.remove(
+                "backdrop-blur-md",
+                "bg-white/80",
+                "shadow-lg",
+            );
+        }
+
+        lastScroll = currentScroll;
+    });
+</script> -->

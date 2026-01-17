@@ -1,0 +1,98 @@
+---
+interface Props {
+    currentPage: number;
+    totalPages: number;
+    baseUrl?: string;
+    query?: string;
+}
+
+const { currentPage, totalPages, baseUrl = "/jobs", query = "" } = Astro.props;
+
+// Build URL with query params
+const buildPageUrl = (page: number) => {
+    const params = new URLSearchParams();
+    if (page > 1) params.set("page", page.toString());
+    if (query) params.set("q", query);
+    const queryString = params.toString();
+    return queryString ? `${baseUrl}?${queryString}` : baseUrl;
+};
+
+// Generate page numbers to display
+const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+---
+
+{
+    totalPages > 1 && (
+        <nav
+            class="container mx-auto px-4 py-8 flex justify-center items-center gap-2"
+            aria-label="Paginación"
+        >
+            {/* Previous Button */}
+            {currentPage > 1 && (
+                <a
+                    href={buildPageUrl(currentPage - 1)}
+                    class="px-4 h-10 rounded-lg font-medium text-gray-600 bg-white border border-gray-200 hover:bg-gray-50 flex items-center gap-2 transition-colors mr-2"
+                    aria-label="Página anterior"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        class="w-4 h-4"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m15.75 19.5-7.5-7.5 7.5-7.5"
+                        />
+                    </svg>
+                    Anterior
+                </a>
+            )}
+
+            {/* Page Numbers */}
+            {pages.map((pageNum) => (
+                <a
+                    href={buildPageUrl(pageNum)}
+                    class:list={[
+                        "min-w-10 h-10 px-3 rounded-lg font-medium transition-all flex items-center justify-center",
+                        currentPage === pageNum
+                            ? "bg-teal-700 text-white shadow-md"
+                            : "bg-white text-gray-700 hover:bg-gray-50 border border-gray-300",
+                    ]}
+                    aria-label={`Página ${pageNum}`}
+                    aria-current={currentPage === pageNum ? "page" : undefined}
+                >
+                    {pageNum}
+                </a>
+            ))}
+
+            {/* Next Button */}
+            {currentPage < totalPages && (
+                <a
+                    href={buildPageUrl(currentPage + 1)}
+                    class="px-4 h-10 rounded-lg font-medium text-gray-600 bg-white border border-gray-200 hover:bg-gray-50 flex items-center gap-2 transition-colors ml-2"
+                    aria-label="Página siguiente"
+                >
+                    Siguiente
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="2"
+                        stroke="currentColor"
+                        class="w-4 h-4"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                        />
+                    </svg>
+                </a>
+            )}
+        </nav>
+    )
+}

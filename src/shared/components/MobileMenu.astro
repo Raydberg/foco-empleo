@@ -1,0 +1,154 @@
+---
+interface Props {
+    navItems: { name: string; href: string }[];
+}
+
+const { navItems } = Astro.props;
+---
+
+<!-- Mobile menu button (hamburger) -->
+<button
+    id="mobile-menu-button"
+    class="md:hidden flex items-center justify-center p-2 z-50 text-[#0D0D0D] focus:outline-none"
+    aria-label="Toggle menu"
+    aria-expanded="false"
+>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+    >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+</button>
+
+<!-- Mobile menu overlay -->
+<div
+    id="mobile-menu-overlay"
+    class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300 md:hidden"
+>
+</div>
+
+<!-- Mobile menu panel -->
+<div
+    id="mobile-menu-panel"
+    class="fixed inset-0 bg-white z-50 transform translate-x-full transition-transform duration-300 md:hidden flex flex-col"
+>
+    <div
+        class="flex justify-between items-center px-6 py-4 border-b-2 border-[#6C757D]"
+    >
+        <div class="flex items-center gap-2">
+            <!-- Logo pattern from user request -->
+            <svg
+                width="30"
+                height="32"
+                viewBox="0 0 30 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+                <rect width="30" height="32" fill="url(#pattern0_2194_679)"
+                ></rect>
+                <defs>
+                    <pattern
+                        id="pattern0_2194_679"
+                        patternContentUnits="objectBoundingBox"
+                        width="1"
+                        height="1"
+                    >
+                        <use
+                            xlink:href="#image0_2194_679"
+                            transform="matrix(0.00396825 0 0 0.00373134 -0.507937 -0.156716)"
+                        ></use>
+                    </pattern>
+                    <image
+                        id="image0_2194_679"
+                        width="500"
+                        height="500"
+                        preserveAspectRatio="none"
+                        xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAYAAADL1t+KAAAAAXNSR0IArs4c6QAAIABJREFUeF7sfQecFFX29XmVu3siUUURBd2VxayLrjm7ZldRdHXNGUFAFBUEc0JUTKsu6ooR17Bi/CvgKmbMGFARFCTDpE6Vv+++6hqakaSkmZ7b/sYeerqr6p33us676VwBfjACjAAjwAgwAoxAi0dAtPgR8AAYAUaAEWAEGAFGAF947Q8"
+                    />
+                </defs>
+            </svg>
+            <span class="font-bold text-xl text-[#0D0D0D]">Foco Empleo</span>
+        </div>
+        <button
+            id="close-menu-button"
+            class="text-[#0D0D0D] p-2 focus:outline-none"
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+
+    <div class="p-6 overflow-y-auto">
+        <ul class="flex flex-col gap-6">
+            {
+                navItems.map((item) => (
+                    <li>
+                        <a
+                            href={item.href}
+                            class="block py-2 text-xl font-medium text-[#0D0D0D] hover:text-[#0F4C5C] transition-colors"
+                        >
+                            {item.name}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</div>
+
+<script>
+    const openButton = document.getElementById("mobile-menu-button");
+    const closeButton = document.getElementById("close-menu-button");
+    const overlay = document.getElementById("mobile-menu-overlay");
+    const panel = document.getElementById("mobile-menu-panel");
+
+    let isOpen = false;
+
+    function toggleMenu() {
+        isOpen = !isOpen;
+
+        if (isOpen) {
+            panel?.classList.remove("translate-x-full");
+            overlay?.classList.remove("opacity-0", "pointer-events-none");
+            overlay?.classList.add("opacity-100", "pointer-events-auto");
+            openButton?.setAttribute("aria-expanded", "true");
+            document.body.style.overflow = "hidden";
+        } else {
+            panel?.classList.add("translate-x-full");
+            overlay?.classList.add("opacity-0", "pointer-events-none");
+            overlay?.classList.remove("opacity-100", "pointer-events-auto");
+            openButton?.setAttribute("aria-expanded", "false");
+            document.body.style.overflow = "";
+        }
+    }
+
+    openButton?.addEventListener("click", toggleMenu);
+    closeButton?.addEventListener("click", toggleMenu);
+
+    // Close menu on link click
+    panel?.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+            if (isOpen) toggleMenu();
+        });
+    });
+</script>

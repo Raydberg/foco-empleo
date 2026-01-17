@@ -1,0 +1,176 @@
+---
+import HeadTitle from "../shared/components/HeadTitle.astro";
+import Layout from "../layouts/Layout.astro";
+import InputSearch from "../shared/components/InputSearch.astro";
+
+// Get query params from URL
+const url = new URL(Astro.request.url);
+const query = url.searchParams.get("q") || "";
+---
+
+<Layout
+    title={query ? `Empleos: ${query}` : "Empleos"}
+    description="Descubre las mejores oportunidades de empleo en español. Encuentra trabajos de tiempo completo, medio tiempo y remoto en Foco Empleo."
+>
+    <HeadTitle title={query ? `Empleos: ${query}` : "Empleos"} />
+
+    <div class="flex flex-col min-h-screen">
+        <InputSearch
+            initialQuery={query}
+            className="mt-8 px-4 md:px-0 max-w-5xl mx-auto"
+        />
+
+        <section class="container mx-auto px-4 py-10">
+            <!-- Results count -->
+            <div
+                id="results-count"
+                class="text-gray-600 mb-6 hidden max-w-5xl mx-auto"
+            >
+                Mostrando resultados para "<span
+                    id="search-term-display"
+                    class="font-bold text-teal-900"></span>"
+            </div>
+
+            <!-- Job List Container -->
+            <div id="job-grid" class="flex flex-col gap-4 max-w-5xl mx-auto">
+                {/* Job Items */}
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="hidden py-20 text-center">
+                <div
+                    class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="text-gray-400"
+                        ><circle cx="11" cy="11" r="8"></circle><path
+                            d="m21 21-4.3-4.3"></path></svg
+                    >
+                </div>
+                <h3 class="text-lg font-medium text-gray-900">
+                    No se encontraron empleos
+                </h3>
+                <p class="text-gray-500">Intenta con otros términos.</p>
+                <button
+                    id="clear-filters"
+                    class="mt-4 text-teal-700 hover:underline font-medium"
+                >
+                    Ver todos los empleos
+                </button>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<script>
+
+    function setupFilters() {
+        const searchInput = document.getElementById(
+            "search-input",
+        ) as HTMLInputElement;
+        const jobItems = document.querySelectorAll(".job-item");
+        const resultsCount = document.getElementById("results-count");
+        const searchTermDisplay = document.getElementById(
+            "search-term-display",
+        );
+        const emptyState = document.getElementById("empty-state");
+        const jobGrid = document.getElementById("job-grid");
+        const clearFiltersBtn = document.getElementById("clear-filters");
+
+        let currentSearch = "";
+
+        // Parse URL params on load
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlSearch = urlParams.get("q");
+
+        if (urlSearch) {
+            currentSearch = urlSearch.toLowerCase();
+            // InputSearch component already sets value via prop, but we ensure sync
+            if (searchInput) searchInput.value = urlSearch;
+        }
+
+        // Initial Filter
+        filterJobs();
+
+        // Event Listeners
+        searchInput?.addEventListener("input", (e) => {
+            currentSearch = (e.target as HTMLInputElement).value.toLowerCase();
+
+            // Update URL without refresh
+            const newUrl = new URL(window.location.href);
+            if (currentSearch) {
+                newUrl.searchParams.set("q", currentSearch);
+            } else {
+                newUrl.searchParams.delete("q");
+            }
+            window.history.replaceState({}, "", newUrl);
+
+            filterJobs();
+        });
+
+        clearFiltersBtn?.addEventListener("click", () => {
+            currentSearch = "";
+            if (searchInput) searchInput.value = "";
+
+            // Clean URL
+            const newUrl = new URL(window.location.href);
+            newUrl.searchParams.delete("q");
+            window.history.replaceState({}, "", newUrl);
+
+            filterJobs();
+        });
+
+        function filterJobs() {
+            let visibleCount = 0;
+
+            jobItems.forEach((item) => {
+                const title = item.getAttribute("data-title") || "";
+                const employer = item.getAttribute("data-employer") || "";
+                const location = item.getAttribute("data-location") || "";
+                const type = item.getAttribute("data-type") || "";
+
+                const matchesSearch =
+                    !currentSearch ||
+                    title.includes(currentSearch) ||
+                    employer.includes(currentSearch) ||
+                    location.includes(currentSearch) ||
+                    type.includes(currentSearch);
+
+                if (matchesSearch) {
+                    item.classList.remove("hidden");
+                    visibleCount++;
+                } else {
+                    item.classList.add("hidden");
+                }
+            });
+
+            if (visibleCount === 0) {
+                jobGrid?.classList.add("hidden");
+                emptyState?.classList.remove("hidden");
+            } else {
+                jobGrid?.classList.remove("hidden");
+                emptyState?.classList.add("hidden");
+            }
+
+            // Show Search status
+            if (currentSearch && resultsCount && searchTermDisplay) {
+                resultsCount.classList.remove("hidden");
+                searchTermDisplay.textContent = currentSearch;
+            } else if (resultsCount) {
+                resultsCount.classList.add("hidden");
+            }
+        }
+    }
+
+    setupFilters();
+    document.addEventListener("astro:page-load", setupFilters);
+</script>

@@ -1,0 +1,54 @@
+---
+interface Props {
+    initialQuery?: string;
+    className?: string;
+    action?: string;
+}
+
+const { initialQuery = "", className = "", action = "/jobs" } = Astro.props;
+---
+
+<form
+    role="search"
+    method="GET"
+    action={action}
+    class:list={[
+        "flex w-full max-w-3xl mx-auto bg-white rounded-2xl shadow-xl transition-all duration-300",
+        className,
+    ]}
+>
+    <div class="grow relative rounded-l-2xl overflow-hidden">
+        <input
+            type="text"
+            id="search-input"
+            name="q"
+            value={initialQuery}
+            placeholder="Buscar empleo..."
+            class="w-full h-full px-8 py-4 text-gray-700 text-lg placeholder-gray-400 focus:outline-none bg-transparent"
+            aria-label="Término de búsqueda de empleo"
+            autocomplete="off"
+        />
+    </div>
+
+    <button
+        type="submit"
+        class="bg-[#0F4C5C] hover:bg-[#0a3540] text-white px-8 py-4 font-medium text-lg transition-colors flex items-center gap-2 rounded-r-2xl"
+        aria-label="Ejecutar búsqueda"
+    >
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-6 h-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2.5"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+            ></path>
+        </svg>
+        <span class="hidden sm:inline">Buscar empleo</span>
+    </button>
+</form>

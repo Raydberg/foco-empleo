@@ -1,0 +1,12 @@
+---
+import ContactForm from "../modules/ContactForm.astro";
+import HeadTitle from "../shared/components/HeadTitle.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title={"Contacto"}>
+    <HeadTitle title="Contacto" />
+    <section class="container mx-auto px-4 py-12 md:py-16">
+        <ContactForm />
+    </section>
+</Layout>

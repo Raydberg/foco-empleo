@@ -1,0 +1,115 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import BlogCard from "../../modules/blogs/BlogCard.astro";
+import BlogCardFeatured from "../../modules/blogs/BlogCardFeatured.astro";
+import type { GetStaticPaths, Page } from "astro";
+import type { CollectionEntry } from "astro:content";
+import { getPubDate } from "../../core/utils/getFileDate";
+import HeadTitle from "../../shared/components/HeadTitle.astro";
+
+export const getStaticPaths = (async ({ paginate }) => {
+    const blogPosts = await getCollection("blog");
+    const sortedPosts = blogPosts.sort(
+        (a, b) => getPubDate(b).getTime() - getPubDate(a).getTime(),
+    );
+
+    return paginate(sortedPosts, { pageSize: 10 });
+}) satisfies GetStaticPaths;
+
+type Props = {
+    page: Page<CollectionEntry<"blog">>;
+};
+
+const { page } = Astro.props;
+
+const featuredPost = page.currentPage === 1 ? page.data[0] : null;
+const regularPosts = page.currentPage === 1 ? page.data.slice(1) : page.data;
+---
+
+<Layout title={`Blog - Página ${page.currentPage}`}>
+    <HeadTitle title="Blog" />
+    <section class="container mx-auto px-4 md:px-8 lg:px-28 py-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            El Blog del Empleo Moderno
+        </h1>
+        <p class="text-lg text-gray-600 mb-12 max-w-3xl">
+            Consejos prácticos, guías y recursos para mejorar tu búsqueda
+            laboral paso a paso.
+        </p>
+        {
+            page.data.length === 0 ? (
+                <p class="text-center text-gray-600">
+                    No hay posts disponibles aún.
+                </p>
+            ) : (
+                <>
+                    {featuredPost && <BlogCardFeatured post={featuredPost} />}
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                        {regularPosts.map((post, index) => (
+                            <BlogCard
+                                post={post}
+                                priority={page.currentPage === 1 && index < 3}
+                            />
+                        ))}
+                    </div>
+
+                    <nav
+                        class="flex justify-center items-center gap-2 mt-12"
+                        aria-label="Paginación del blog"
+                    >
+                        {page.url.prev && (
+                            <a
+                                href={page.url.prev}
+                                class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium text-gray-700"
+                                aria-label="Página anterior"
+                            >
+                                ← Anterior
+                            </a>
+                        )}
+
+                        <div class="flex gap-2">
+                            {Array.from(
+                                { length: page.lastPage },
+                                (_, i) => i + 1,
+                            ).map((num) => (
+                                <a
+                                    href={num === 1 ? "/blog" : `/blog/${num}`}
+                                    class={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                                        num === page.currentPage
+                                            ? "bg-teal-700 text-white"
+                                            : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                                    }`}
+                                    aria-label={`Ir a página ${num}`}
+                                    aria-current={
+                                        num === page.currentPage
+                                            ? "page"
+                                            : undefined
+                                    }
+                                >
+                                    {num}
+                                </a>
+                            ))}
+                        </div>
+
+                        {page.url.next && (
+                            <a
+                                href={page.url.next}
+                                class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium text-gray-700"
+                                aria-label="Página siguiente"
+                            >
+                                Siguiente →
+                            </a>
+                        )}
+                    </nav>
+
+                    {/* <p class="text-center text-gray-600 mt-6">
+                        Página {page.currentPage} de {page.lastPage} 
+                        ({page.start + 1}-{page.end + 1} de {page.total} posts)
+                    </p> */}
+                </>
+            )
+        }
+    </section>
+</Layout>

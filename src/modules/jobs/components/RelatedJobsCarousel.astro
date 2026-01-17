@@ -1,0 +1,40 @@
+---
+
+
+const { jobs } = Astro.props;
+---
+
+<section class="mt-12 overflow-hidden">
+    <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold text-gray-900">Empleos Relacionados</h2>
+        <!-- Navigation buttons removed for static version or implemented via CSS scroll snap/native scrollbar -->
+    </div>
+
+    {
+        jobs.length > 0 ? (
+            <div class="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory -mx-4 px-4 scrollbar-custom">
+               
+            </div>
+        ) : (
+            <p class="text-gray-500">No se encontraron empleos relacionados.</p>
+        )
+    }
+
+    <style>
+        /* Custom scrollbar styling if desired */
+        .scrollbar-custom::-webkit-scrollbar {
+            height: 8px;
+        }
+        .scrollbar-custom::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .scrollbar-custom::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</section>

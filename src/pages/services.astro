@@ -1,0 +1,209 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import serviceImage from "../assets/service-image.svg";
+---
+
+<Layout title={"Servicios"}>
+    <div slot="header-hero" class="hero-header">
+        <div
+            class="container mx-auto px-4 pt-28 pb-12 text-center relative z-10"
+        >
+            <h1 class="title-header">Servicios</h1>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 lg:py-16 relative z-10">
+        <div
+            class="flex flex-col xl:flex-row bg-white rounded-3xl overflow-hidden"
+            style="box-shadow: -2px 4px 12px 0px #18181814;"
+        >
+            <div
+                class="w-full xl:w-1/2 relative h-64 md:h-[450px] xl:h-auto min-h-full"
+            >
+                <Image
+                    src={serviceImage}
+                    alt="Servicios de CV y LinkedIn"
+                    class="w-full h-full object-cover block absolute inset-0"
+                />
+                <div
+                    class="absolute top-6 left-6 bg-[#0F4C5C] text-white font-bold py-2 px-6 rounded-lg shadow-lg z-10 text-lg"
+                >
+                    Perfil Foco
+                </div>
+            </div>
+
+            <div class="w-full xl:w-1/2 p-6 md:p-10 xl:p-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-[#0F4C5C] mb-4">
+                    Creación de CV y LinkedIn
+                </h2>
+                <p
+                    class="text-gray-600 mb-6 leading-relaxed text-base md:text-lg"
+                >
+                    Creamos tu Curriculum vitae y perfil de LinkedIn desde cero,
+                    con un diseño moderno y una estrategia clara para lograr
+                    entrevistas, mejorar tu visibilidad enfocado en captar la
+                    atención de reclutadores.
+                </p>
+
+                <h3 class="text-lg md:text-xl font-bold text-[#0F4C5C] mb-4">
+                    ¿Qué incluye?
+                </h3>
+
+                <div class="space-y-6 text-gray-700">
+                    <div>
+                        <h4
+                            class="font-bold text-[#0F4C5C] mb-2 text-base md:text-lg"
+                        >
+                            Armado de CV desde cero
+                        </h4>
+                        <ul class="list-none space-y-1">
+                            <li class="flex items-start gap-2">
+                                <span
+                                    class="text-black font-bold text-lg leading-none mt-1"
+                                    >•</span
+                                >
+                                <span
+                                    class="leading-relaxed text-sm md:text-base"
+                                    >Diseño profesional y limpio.</span
+                                >
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span
+                                    class="text-black font-bold text-lg leading-none mt-1"
+                                    >•</span
+                                >
+                                <span
+                                    class="leading-relaxed text-sm md:text-base"
+                                    >Redacción optimizada con palabras clave
+                                    (ATS).</span
+                                >
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span
+                                    class="text-black font-bold text-lg leading-none mt-1"
+                                    >•</span
+                                >
+                                <span
+                                    class="leading-relaxed text-sm md:text-base"
+                                    >Adaptación al tipo de trabajo que busca.</span
+                                >
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span
+                                    class="text-black font-bold text-lg leading-none mt-1"
+                                    >•</span
+                                >
+                                <span
+                                    class="leading-relaxed text-sm md:text-base"
+                                    >Formato PDF + editable.</span
+                                >
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4
+                            class="font-bold text-[#0F4C5C] mb-2 text-base md:text-lg"
+                        >
+                            Optimización completa del perfil de LinkedIn
+                        </h4>
+                        <ul class="list-none space-y-1">
+                            <li class="flex items-start gap-2">
+                                <span
+                                    class="text-black font-bold text-lg leading-none mt-1"
+                                    >•</span
+                                >
+                                <span
+                                    class="leading-relaxed text-sm md:text-base"
+                                    >Título profesional optimizado.</span
+                                >
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span
+                                    class="text-black font-bold text-lg leading-none mt-1"
+                                    >•</span
+                                >
+                                <span
+                                    class="leading-relaxed text-sm md:text-base"
+                                    >Extracto atractivo y persuasivo.</span
+                                >
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span
+                                    class="text-black font-bold text-lg leading-none mt-1"
+                                    >•</span
+                                >
+                                <span
+                                    class="leading-relaxed text-sm md:text-base"
+                                    >Revisión de secciones: experiencia,
+                                    educación, habilidades.</span
+                                >
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span
+                                    class="text-black font-bold text-lg leading-none mt-1"
+                                    >•</span
+                                >
+                                <span
+                                    class="leading-relaxed text-sm md:text-base"
+                                    >Recomendación de foto, banner y enlaces.</span
+                                >
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span
+                                    class="text-black font-bold text-lg leading-none mt-1"
+                                    >•</span
+                                >
+                                <span
+                                    class="leading-relaxed text-sm md:text-base"
+                                    >Actualización del perfil para aparecer en
+                                    más búsquedas.</span
+                                >
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4
+                            class="font-bold text-[#0F4C5C] mb-2 text-base md:text-lg"
+                        >
+                            Entrega lista para usar:
+                        </h4>
+                        <ul class="list-none space-y-1">
+                            <li class="flex items-start gap-2">
+                                <span
+                                    class="text-black font-bold text-lg leading-none mt-1"
+                                    >•</span
+                                >
+                                <span
+                                    class="leading-relaxed text-sm md:text-base"
+                                    >Curriculum final</span
+                                >
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span
+                                    class="text-black font-bold text-lg leading-none mt-1"
+                                    >•</span
+                                >
+                                <span
+                                    class="leading-relaxed text-sm md:text-base"
+                                    >Perfil de LinkedIn completo</span
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <a
+                        href="mailto:focoempleo1@gmail.com"
+                        class="inline-block bg-[#0F4C5C] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#0b3844] transition-colors shadow-lg text-base md:text-lg w-full sm:w-auto text-center"
+                    >
+                        Quiero mejorar mi CV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
